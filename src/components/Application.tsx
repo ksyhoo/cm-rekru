@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider , createGlobalStyle } from 'styled-components';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import SpecialistsPage from '@src/pages/SpecialistsPage';
 import theme from '@src/helpers/theme';
 import { Provider } from 'react-redux';
@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
-`
+`;
 const Application: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -21,8 +21,8 @@ const Application: React.FC = () => {
           <GlobalStyle />
           <SpecialistsPage />
         </>
-     </Provider>
-  </ThemeProvider>
+      </Provider>
+    </ThemeProvider>
   );
 };
 

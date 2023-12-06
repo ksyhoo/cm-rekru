@@ -1,9 +1,9 @@
 export interface Theme {
-    tbd: any;
+  tbd: any;
 }
 
 const theme: Theme = {
-    tbd: 'put theme here'
+  tbd: 'put theme here',
 };
 
 //TODO: create a simple theme

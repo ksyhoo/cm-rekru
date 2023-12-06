@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const SpecialistList = () => {
-  return (
-    <div>SpecialistList</div>
-  )
-}
+  return <div>SpecialistList</div>;
+};
 
-export default SpecialistList
+export default SpecialistList;

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const SpecialistCart = () => {
-  return (
-    <div>SpecialistCart</div>
-  )
-}
+  return <div>SpecialistCart</div>;
+};
 
-export default SpecialistCart
+export default SpecialistCart;

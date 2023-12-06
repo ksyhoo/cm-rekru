@@ -1,11 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit'
-import specialistsReducer from '@src/pages/specialistsSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import specialistsReducer from '@src/pages/specialistsSlice';
 
 export const store = configureStore({
   reducer: {
-    specialists: specialistsReducer,
+    specialists: specialistsReducer.reducer,
   },
-})
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
