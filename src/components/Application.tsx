@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Application: React.VFC = () => {
+const Application: React.FC = () => {
 
   return (
     <div>
