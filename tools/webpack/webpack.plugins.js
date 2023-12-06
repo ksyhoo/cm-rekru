@@ -10,7 +10,6 @@ module.exports = [
   inDev() && new ReactRefreshWebpackPlugin(),
   new HtmlWebpackPlugin({
     template: 'src/index.html',
-    favicon: 'assets/images/logo.png',
     inject: true,
   }),
 ].filter(Boolean);
