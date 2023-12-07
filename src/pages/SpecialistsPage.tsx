@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Container } from './styled';
 import { useAppDispatch, useAppSelector } from '@src/store/hooks';
 import { fetchSpecialists } from './specialistsSlice';
+import SpecialistCard from '@src/components/SpecialistCard';
 
 const SpecialistsPage = () => {
   const dispatch = useAppDispatch();
@@ -11,7 +11,13 @@ const SpecialistsPage = () => {
 
   const specialistList = useAppSelector((data) => data.specialists.specialists);
 
-  return <Container>SpecialistsPage</Container>;
+  if (!specialistList.length) return null;
+
+  return (
+    <main>
+      <SpecialistCard specialist={specialistList[0]} />
+    </main>
+  );
 };
 
 export default SpecialistsPage;
