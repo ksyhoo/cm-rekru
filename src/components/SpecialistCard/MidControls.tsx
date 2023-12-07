@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 1rem;
-  padding: 1rem;
+  padding: 0 1rem;
 `;
 
 const MidControls: React.FC = () => {

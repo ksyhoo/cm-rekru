@@ -25,13 +25,12 @@ const SpecialistCard: React.FC<Props> = ({ specialist }) => {
         imageUrl={specialist.imgUrl}
       />
       <MidControls />
-      <SpecialistScore />
+      <SpecialistScore score={1.5} votes={22} />
       <BottomControls />
     </Container>
   );
 };
 
 {
-  /* , middle card, mid controls, score, bottom controls */
 }
 export default SpecialistCard;

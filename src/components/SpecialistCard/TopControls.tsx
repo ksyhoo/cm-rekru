@@ -8,10 +8,11 @@ import heart3x from '@assets/images/heart@3x.png';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
-  all: unset;
   display: flex;
   align-items: start;
+  cursor: pointer;
 `;
+
 const Container = styled.div`
   padding: 1.25rem;
   display: flex;

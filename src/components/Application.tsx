@@ -14,6 +14,10 @@ const GlobalStyle = createGlobalStyle`
     width: 'auto';
     font-size: 20px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+    button {
+      all: unset;
+    }
   }
 `;
 const Application: React.FC = () => {
