@@ -1,7 +1,7 @@
 import React from 'react';
 
-const SpecialistCart = () => {
+const SpecialistCard = () => {
   return <div>SpecialistCart</div>;
 };
 
-export default SpecialistCart;
+export default SpecialistCard;

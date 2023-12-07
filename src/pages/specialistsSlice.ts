@@ -48,9 +48,9 @@ const specialistPromise = () => {
     },
   );
 };
-//FIXME: I believe that more than 5000 records is to much for frontend search operations.
+//FIXME: I believe that more than 5000 records is to much for frontend search operations and then rendering the list of subset of this list.
 // Even implementing search result infinite scroll, pagination or list virtualization seems too much.
-// I'll try to be clever and try to implement some kind of pseud backend with filters and queries, if time allows.
+// I'll try to be clever and  implement some kind of pseudo backend with filters and queries, if time allows.
 // If not i'll do infinite scroll of results.
 export const fetchSpecialists = createAsyncThunk<SpecialistWithUserData[]>(
   'specialists/fetchSpecialists',
