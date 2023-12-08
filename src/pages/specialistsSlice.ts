@@ -14,10 +14,12 @@ export type SpecialistWithUserData = Specialist & {
 
 type SpecialistsState = {
   specialists: SpecialistWithUserData[];
+  offset: number;
 };
 
 const initialState: SpecialistsState = {
   specialists: [],
+  offset: 0,
 };
 
 export const specialistsSlice = createSlice({
@@ -25,39 +27,40 @@ export const specialistsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      fetchSpecialists.fulfilled,
-      (state: SpecialistsState, action) => {
-        state.specialists = action.payload;
-      },
-    );
+    builder.addCase(fetchSpecialists.fulfilled, (state, action) => {
+      state.specialists = [...state.specialists, ...action.payload];
+      state.offset += 20;
+    });
   },
 });
 
-const specialistPromise = () => {
+const specialistPromise = (offset: number) => {
   return new Promise(
     (
-      resolve: <T>(value?: T | PromiseLike<T>) => void,
+      resolve: (
+        value?:
+          | SpecialistWithUserData[]
+          | PromiseLike<SpecialistWithUserData[]>,
+      ) => void,
       reject: (reason?: string) => void,
     ) => {
       try {
-        resolve(specialists);
+        resolve(specialists.slice(offset, offset + 20));
       } catch {
         reject('error getting data');
       }
     },
   );
 };
-//FIXME: I believe that more than 5000 records is to much for frontend search operations and then rendering the list of subset of this list.
-// Even implementing search result infinite scroll, pagination or list virtualization seems too much.
+//FIXME: I believe that more than 5000 records is to much for frontend search operations and then rendering the list or subset of this list.
 // I'll try to be clever and  implement some kind of pseudo backend with filters and queries, if time allows.
-// If not i'll do infinite scroll of results.
-export const fetchSpecialists = createAsyncThunk<SpecialistWithUserData[]>(
-  'specialists/fetchSpecialists',
-  async () => {
-    const response = await specialistPromise();
-    return response as SpecialistWithUserData[];
-  },
-);
+// If not i'll do infinite scroll / pagination / list virtualization of the results.
+export const fetchSpecialists = createAsyncThunk<
+  SpecialistWithUserData[],
+  number
+>('specialists/fetchSpecialists', async (offset) => {
+  const response = await specialistPromise(offset);
+  return response;
+});
 
 export default specialistsSlice;

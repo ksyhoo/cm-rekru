@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Container = styled.div`
-  width: 323px;
+  min-width: 323px;
 `;
 
 const SpecialistCard: React.FC<Props> = ({ specialist }) => {
@@ -31,6 +31,4 @@ const SpecialistCard: React.FC<Props> = ({ specialist }) => {
   );
 };
 
-{
-}
 export default SpecialistCard;

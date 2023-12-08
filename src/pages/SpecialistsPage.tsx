@@ -1,22 +1,25 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@src/store/hooks';
-import { fetchSpecialists } from './specialistsSlice';
-import SpecialistCard from '@src/components/SpecialistCard';
+import React from 'react';
+import InfinityScroll from '@src/components/InfinityScroll';
+import styled from 'styled-components';
+
+const Backdrop = styled.main`
+  background-color: #eee6ff;
+`;
+
+const Container = styled.div`
+  max-width: 1322px;
+  margin-left: auto;
+  margin-right: auto;
+`;
 
 const SpecialistsPage = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchSpecialists());
-  }, []);
-
-  const specialistList = useAppSelector((data) => data.specialists.specialists);
-
-  if (!specialistList.length) return null;
-
   return (
-    <main>
-      <SpecialistCard specialist={specialistList[0]} />
-    </main>
+    <Backdrop>
+      <Container>
+        <h1>top bar</h1>
+        <InfinityScroll />
+      </Container>
+    </Backdrop>
   );
 };
 
