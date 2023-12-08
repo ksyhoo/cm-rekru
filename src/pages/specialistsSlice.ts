@@ -33,10 +33,10 @@ export const specialistsSlice = createSlice({
       state.offset += 20;
     });
     builder.addCase(likeSpecialist, (state, action) => {
-      const special = state.specialists.find(
+      const specialist = state.specialists.find(
         (specialist) => specialist.id === action.payload,
       );
-      special.liked = !special.liked;
+      specialist.liked = !specialist.liked;
     });
   },
 });
