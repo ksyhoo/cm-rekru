@@ -69,7 +69,6 @@ export const fetchSpecialists = createAsyncThunk<
   const response = await specialistPromise(offset);
   return response;
 });
-// const { likeSpecialist: asd } = specialistsSlice.actions;
 
 export const likeSpecialist = createAction<number>('specialists/like');
 export default specialistsSlice;
