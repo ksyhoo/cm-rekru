@@ -38,11 +38,15 @@ const specializations = [
 ];
 const imgUrls = [''];
 
-export const specialists: Specialist[] = Array.from({ length: 5000 }, () => ({
-  name: `${names[Math.floor(Math.random() * names.length)]} ${
-    surnames[Math.floor(Math.random() * names.length)]
-  }`,
-  specialization:
-    specializations[Math.floor(Math.random() * specializations.length)],
-  imgUrl: imgUrls[0],
-}));
+export const specialists: Specialist[] = Array.from(
+  { length: 5000 },
+  (_, idx) => ({
+    name: `${names[Math.floor(Math.random() * names.length)]} ${
+      surnames[Math.floor(Math.random() * names.length)]
+    }`,
+    specialization:
+      specializations[Math.floor(Math.random() * specializations.length)],
+    imgUrl: imgUrls[0],
+    id: idx,
+  }),
+);

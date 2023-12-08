@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { specialists } from '@src/store/data';
 
 export type Specialist = {
+  id: number;
   name: string;
   specialization: string;
   imgUrl?: string;
@@ -30,6 +31,12 @@ export const specialistsSlice = createSlice({
     builder.addCase(fetchSpecialists.fulfilled, (state, action) => {
       state.specialists = [...state.specialists, ...action.payload];
       state.offset += 20;
+    });
+    builder.addCase(likeSpecialist, (state, action) => {
+      const special = state.specialists.find(
+        (specialist) => specialist.id === action.payload,
+      );
+      special.liked = !special.liked;
     });
   },
 });
@@ -62,5 +69,7 @@ export const fetchSpecialists = createAsyncThunk<
   const response = await specialistPromise(offset);
   return response;
 });
+// const { likeSpecialist: asd } = specialistsSlice.actions;
 
+export const likeSpecialist = createAction<number>('specialists/like');
 export default specialistsSlice;

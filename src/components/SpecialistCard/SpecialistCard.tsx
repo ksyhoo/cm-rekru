@@ -19,7 +19,7 @@ const Container = styled.div`
 const SpecialistCard: React.FC<Props> = ({ specialist }) => {
   return (
     <Container>
-      <TopControls />
+      <TopControls id={specialist.id} liked={specialist.liked} />
       <SpecialistDetails
         name={specialist.name}
         specialization={specialist.specialization}

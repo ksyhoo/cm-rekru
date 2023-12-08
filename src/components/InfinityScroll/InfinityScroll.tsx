@@ -67,8 +67,8 @@ const InfiniteScroll = () => {
   return (
     <>
       <ListContainer>
-        {specialists.map((item, index) => (
-          <SpecialistCard specialist={item} key={index} />
+        {specialists.map((item) => (
+          <SpecialistCard specialist={item} key={item.id} />
         ))}
       </ListContainer>
       <Loader ref={loaderRef}>{isLoading && 'loading'}</Loader>
