@@ -2,10 +2,12 @@ import React from 'react';
 import blueStar from '@assets/images/star-blue.png';
 import grayStar from '@assets/images/star-gray.png';
 import styled from 'styled-components';
+import { useAppDispatch } from '@src/store/hooks';
+import { voteSpecialist } from '@src/pages/specialistsSlice';
 
 type Props = {
-  score: number;
-  votes: number;
+  rank: number[];
+  id: number;
 };
 
 const StyledButton = styled.button`
@@ -42,24 +44,35 @@ const NumberVotes = styled.p`
   font-weight: 400;
 `;
 
-const SpecialistScore: React.FC<Props> = ({ score, votes }) => {
-  const handleVote = () => 'null';
-  const starsCollection = Array.from(
-    { length: 5 },
-    (_, idx) => idx >= score || score === 0,
-  );
+const getScore = (rankArray: number[]) =>
+  rankArray.reduce((acc: number, curr: number) => {
+    return (acc += curr);
+  }, 0) / rankArray.length || 0;
+
+const getStars = (score: number) =>
+  Array.from({ length: 5 }, (_, idx) => idx >= score || score === 0);
+
+const SpecialistScore: React.FC<Props> = ({ rank = [], id }) => {
+  const dispatch = useAppDispatch();
+  const score = getScore(rank);
+  const starsCollection = getStars(score);
+  const handleVote = (score: number) => dispatch(voteSpecialist({ id, score }));
   return (
     <Container>
       <Stars>
         {starsCollection.map((grayedOut, idx) => (
-          <StyledButton key={idx} onClick={handleVote} type='button'>
+          <StyledButton
+            key={idx}
+            type='button'
+            onClick={() => handleVote(idx + 1)}
+          >
             <img src={grayedOut ? grayStar : blueStar} />
           </StyledButton>
         ))}
       </Stars>
       <Box>
-        <NumberScore>{score}</NumberScore>
-        <NumberVotes>({votes})</NumberVotes>
+        <NumberScore>{score.toFixed(2)}</NumberScore>
+        <NumberVotes>({rank.length})</NumberVotes>
       </Box>
     </Container>
   );

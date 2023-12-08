@@ -48,5 +48,7 @@ export const specialists: Specialist[] = Array.from(
       specializations[Math.floor(Math.random() * specializations.length)],
     imgUrl: imgUrls[0],
     id: idx,
+    rank: [],
+    liked: false,
   }),
 );

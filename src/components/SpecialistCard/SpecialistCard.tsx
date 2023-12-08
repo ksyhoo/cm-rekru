@@ -1,6 +1,6 @@
 import React from 'react';
 import TopControls from './TopControls';
-import { SpecialistWithUserData } from '@src/pages/specialistsSlice';
+import { Specialist } from '@src/pages/specialistsSlice';
 import SpecialistDetails from './SpecialistDetails';
 import MidControls from './MidControls';
 import SpecialistScore from './SpecialistScore';
@@ -8,7 +8,7 @@ import BottomControls from './BottomControls';
 import styled from 'styled-components';
 
 type Props = {
-  specialist: SpecialistWithUserData;
+  specialist: Specialist;
 };
 
 const Container = styled.div`
@@ -26,7 +26,7 @@ const SpecialistCard: React.FC<Props> = ({ specialist }) => {
         imageUrl={specialist.imgUrl}
       />
       <MidControls />
-      <SpecialistScore score={1.5} votes={22} />
+      <SpecialistScore rank={specialist.rank} id={specialist.id} />
       <BottomControls />
     </Container>
   );
