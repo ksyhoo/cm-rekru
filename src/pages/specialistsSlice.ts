@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { specialists } from '@src/store/data';
 
 export type Specialist = {
@@ -26,17 +26,18 @@ const initialState: SpecialistsState = {
 export const specialistsSlice = createSlice({
   name: 'specialists',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchSpecialists.fulfilled, (state, action) => {
-      state.specialists = [...state.specialists, ...action.payload];
-      state.offset += 20;
-    });
-    builder.addCase(likeSpecialist, (state, action) => {
+  reducers: {
+    likeSpecialist(state, action) {
       const specialist = state.specialists.find(
         (specialist) => specialist.id === action.payload,
       );
       specialist.liked = !specialist.liked;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchSpecialists.fulfilled, (state, action) => {
+      state.specialists = [...state.specialists, ...action.payload];
+      state.offset += 20;
     });
   },
 });
@@ -70,5 +71,6 @@ export const fetchSpecialists = createAsyncThunk<
   return response;
 });
 
-export const likeSpecialist = createAction<number>('specialists/like');
+const { likeSpecialist } = specialistsSlice.actions;
+export { likeSpecialist };
 export default specialistsSlice;
