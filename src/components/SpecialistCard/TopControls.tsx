@@ -15,6 +15,7 @@ const StyledButton = styled.button`
 
 const Container = styled.div`
   padding: 1.25rem;
+  padding-bottom: 0;
   display: flex;
   justify-content: space-between;
 `;

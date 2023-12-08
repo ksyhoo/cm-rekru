@@ -11,11 +11,8 @@ const Loader = styled.div`
 const ListContainer = styled.div`
   justify-content: center;
   display: flex;
-  gap: 10px;
+  gap: 20px;
   flex-wrap: wrap;
-`;
-const Container = styled.div`
-  background-color: white;
 `;
 
 const InfiniteScroll = () => {
@@ -68,14 +65,14 @@ const InfiniteScroll = () => {
   }, []);
 
   return (
-    <Container>
+    <>
       <ListContainer>
         {specialists.map((item, index) => (
           <SpecialistCard specialist={item} key={index} />
         ))}
       </ListContainer>
       <Loader ref={loaderRef}>{isLoading && 'loading'}</Loader>
-    </Container>
+    </>
   );
 };
 

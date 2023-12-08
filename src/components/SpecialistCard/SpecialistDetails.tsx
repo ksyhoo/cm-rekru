@@ -24,7 +24,6 @@ const ImageContainer = styled.div<{ h: number; s: number; l: number }>`
   width: 100px;
   height: 100px;
   border-radius: 50px;
-  margin: 20px;
   color: hsl(0, 0%, 40%);
   color: ${(props) => `hsl(${props.h}, ${props.s}%, ${props.l}%)`};
   background-color: ${(props) =>
