@@ -72,4 +72,4 @@ const SpecialistDetails: React.FC<Props> = ({
   );
 };
 
-export default SpecialistDetails;
+export default React.memo(SpecialistDetails);
