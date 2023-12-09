@@ -5,6 +5,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: -0.6rem;
 `;
 
 const Title = styled.h5`
@@ -25,6 +26,7 @@ const ImageContainer = styled.div<{ h: number; s: number; l: number }>`
   height: 100px;
   border-radius: 50px;
   color: hsl(0, 0%, 40%);
+  margin-bottom: 1rem;
   color: ${(props) => `hsl(${props.h}, ${props.s}%, ${props.l}%)`};
   background-color: ${(props) =>
     `hsla(${props.h}, ${props.s}%, ${props.l}%, 30%)`};

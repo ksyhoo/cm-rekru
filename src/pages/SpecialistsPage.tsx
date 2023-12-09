@@ -3,7 +3,7 @@ import InfinityScroll from '@src/components/InfinityScroll';
 import styled from 'styled-components';
 
 const Backdrop = styled.main`
-  background-color: #faf7ff;
+  background-color: #f9fafe;
 `;
 
 const Container = styled.div`

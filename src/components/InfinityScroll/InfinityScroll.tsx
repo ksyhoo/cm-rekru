@@ -11,7 +11,7 @@ const Loader = styled.div`
 const ListContainer = styled.div`
   justify-content: center;
   display: flex;
-  gap: 20px;
+  gap: 30px;
   flex-wrap: wrap;
 `;
 
