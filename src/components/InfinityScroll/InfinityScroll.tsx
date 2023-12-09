@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import SpecialistCard from '../SpecialistCard';
-import { fetchSpecialists } from '@src/pages/specialistsSlice';
 import { useAppDispatch, useAppSelector } from '@src/store/hooks';
 import styled from 'styled-components';
+import { setFilteredSpecialists, setOffset } from '@src/pages/specialistsSlice';
+import { filterData } from '@src/pages/helpers';
 
 const Loader = styled.div`
   height: 200px;
@@ -13,23 +14,22 @@ const ListContainer = styled.div`
   display: flex;
   gap: 30px;
   flex-wrap: wrap;
+  min-height: 100vh;
 `;
 
 const InfiniteScroll = () => {
   const dispatch = useAppDispatch();
-  const { specialists, offset } = useAppSelector((state) => ({
-    specialists: state.specialists.specialists,
+  const { filteredSpecialists, offset, pageType } = useAppSelector((state) => ({
+    filteredSpecialists: state.specialists.filteredSpecialists,
     offset: state.specialists.offset,
+    pageType: state.specialists.pageType,
   }));
-  const [isLoading, setIsLoading] = useState(false);
+
   const loaderRef = useRef(null);
 
-  const fetchData = useCallback(async () => {
-    if (isLoading) return;
-    setIsLoading(true);
-    await dispatch(fetchSpecialists(offset));
-    setIsLoading(false);
-  }, [offset, isLoading]);
+  const fetchData = useCallback(() => {
+    dispatch(setFilteredSpecialists());
+  }, [offset]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -51,18 +51,19 @@ const InfiniteScroll = () => {
   }, [fetchData]);
 
   useEffect(() => {
-    const getData = async () => {
-      setIsLoading(true);
-      try {
-        await dispatch(fetchSpecialists(0));
-      } catch (error) {
-        console.error(error);
-      }
-      setIsLoading(false);
+    const getData = () => {
+      dispatch(setFilteredSpecialists());
     };
-
     getData();
   }, []);
+
+  const filters = {
+    liked: pageType === 'favorite' ? true : undefined,
+  };
+
+  const specialists = filterData(filteredSpecialists, filters);
+
+  if (!specialists) return null;
 
   return (
     <>
@@ -71,7 +72,7 @@ const InfiniteScroll = () => {
           <SpecialistCard specialist={item} key={item.id} />
         ))}
       </ListContainer>
-      <Loader ref={loaderRef}>{isLoading && 'loading'}</Loader>
+      <Loader ref={loaderRef}>{'loading'}</Loader>
     </>
   );
 };

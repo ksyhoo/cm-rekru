@@ -26,7 +26,7 @@ const TopControls: React.FC<{ id: number; liked: boolean }> = ({
   id,
   liked,
 }) => {
-  //TODO: hence no asset for not liked specilalist ony add tooltip for liked specialists
+  //TODO: hence no asset for not liked specialist ony add tooltip for liked specialists
   const dispatch = useAppDispatch();
   const handleLike = () => dispatch(likeSpecialist(id));
   return (

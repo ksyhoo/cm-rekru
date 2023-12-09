@@ -1,5 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { specialists } from '@src/store/data';
+import { createSlice } from '@reduxjs/toolkit';
+import { specialists as originalData } from '@src/store/data';
+
+export type PageType = 'all' | 'favorite';
 
 export type Specialist = {
   id: number;
@@ -12,12 +14,16 @@ export type Specialist = {
 
 type SpecialistsState = {
   specialists: Specialist[];
+  filteredSpecialists: Specialist[];
   offset: number;
+  pageType: PageType;
 };
 
 const initialState: SpecialistsState = {
-  specialists: [],
+  specialists: originalData,
+  filteredSpecialists: [],
   offset: 0,
+  pageType: 'all',
 };
 
 export const specialistsSlice = createSlice({
@@ -25,51 +31,51 @@ export const specialistsSlice = createSlice({
   initialState,
   reducers: {
     likeSpecialist(state, action) {
-      const specialist = state.specialists.find(
+      const originalSpecialist = state.filteredSpecialists.find(
         (specialist) => specialist.id === action.payload,
       );
-      specialist.liked = !specialist.liked;
+      originalSpecialist.liked = !originalSpecialist.liked;
     },
     voteSpecialist(state, action) {
-      const specialist = state.specialists.find(
-        (specialist) => specialist.id === action.payload.id,
+      const originalSpecialist = state.filteredSpecialists.find(
+        (specialist) => specialist.id === action.payload,
       );
-      specialist.rank = [...specialist.rank, action.payload.score];
+      originalSpecialist.rank = [
+        ...originalSpecialist.rank,
+        action.payload.score,
+      ];
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchSpecialists.fulfilled, (state, action) => {
-      state.specialists = [...state.specialists, ...action.payload];
+    setPageType(state, action) {
+      state.pageType = action.payload;
+    },
+    setOffset(state, action) {
+      state.offset = action.payload;
+    },
+    setFilteredSpecialists(state) {
+      const sliced = state.specialists.slice(state.offset, state.offset + 20);
+      state.filteredSpecialists = [...state.filteredSpecialists, ...sliced];
       state.offset += 20;
-    });
+    },
   },
 });
 
-const specialistPromise = (offset: number) => {
-  return new Promise(
-    (
-      resolve: (value?: Specialist[] | PromiseLike<Specialist[]>) => void,
-      reject: (reason?: string) => void,
-    ) => {
-      try {
-        resolve(specialists.slice(offset, offset + 20));
-      } catch {
-        reject('error getting data');
-      }
-    },
-  );
-};
 //FIXME: I believe that more than 5000 records is to much for frontend search operations and then rendering the list or subset of this list.
 // I'll try to be clever and  implement some kind of pseudo backend with filters and queries, if time allows.
 // If not i'll do infinite scroll / pagination / list virtualization of the results.
-export const fetchSpecialists = createAsyncThunk<Specialist[], number>(
-  'specialists/fetchSpecialists',
-  async (offset) => {
-    const response = await specialistPromise(offset);
-    return response;
-  },
-);
+//Update: building API like fetch actions turned out to be time consuming. I decided to load all of the list to state
 
-const { likeSpecialist, voteSpecialist } = specialistsSlice.actions;
-export { likeSpecialist, voteSpecialist };
+const {
+  likeSpecialist,
+  voteSpecialist,
+  setPageType,
+  setOffset,
+  setFilteredSpecialists,
+} = specialistsSlice.actions;
+export {
+  likeSpecialist,
+  voteSpecialist,
+  setPageType,
+  setOffset,
+  setFilteredSpecialists,
+};
 export default specialistsSlice;

@@ -1,6 +1,7 @@
 import React from 'react';
 import InfinityScroll from '@src/components/InfinityScroll';
 import styled from 'styled-components';
+import TopBar from '@src/components/TopBar/TopBar';
 
 const Backdrop = styled.main`
   background-color: #f9fafe;
@@ -16,7 +17,7 @@ const SpecialistsPage = () => {
   return (
     <Backdrop>
       <Container>
-        <h1>top bar</h1>
+        <TopBar />
         <InfinityScroll />
       </Container>
     </Backdrop>
