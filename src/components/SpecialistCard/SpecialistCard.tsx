@@ -14,6 +14,7 @@ type Props = {
 const Container = styled.div`
   background-color: white;
   min-width: 323px;
+  border-radius: 4px;
 `;
 
 const SpecialistCard: React.FC<Props> = ({ specialist }) => {

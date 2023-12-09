@@ -11,11 +11,17 @@ const Container = styled.div`
 `;
 
 const Item = styled.div`
+  cursor: pointer;
   padding: 1rem;
   font-size: 0.6rem;
   background-color: white;
   width: 100%;
   text-align: center;
+  transition: background-color 0.3s;
+  &:hover {
+    background-color: #3540ff;
+    color: white;
+  }
 `;
 
 const BottomControls = () => {
