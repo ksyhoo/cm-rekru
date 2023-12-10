@@ -17,6 +17,7 @@ type SpecialistsState = {
   loadedSpecialists: Specialist[];
   offset: number;
   pageType: PageType;
+  search: string;
 };
 
 const initialState: SpecialistsState = {
@@ -24,6 +25,7 @@ const initialState: SpecialistsState = {
   loadedSpecialists: [],
   offset: 0,
   pageType: 'all',
+  search: '',
 };
 
 export const specialistsSlice = createSlice({
@@ -37,11 +39,11 @@ export const specialistsSlice = createSlice({
       specialistToUpdate.liked = !specialistToUpdate.liked;
     },
     voteSpecialist(state, action) {
-      const loadedSpecialists = state.loadedSpecialists.find(
-        (specialist) => specialist.id === action.payload,
+      const specialistToUpdate = state.loadedSpecialists.find(
+        (specialist) => specialist.id === action.payload.id,
       );
-      loadedSpecialists.rank = [
-        ...loadedSpecialists.rank,
+      specialistToUpdate.rank = [
+        ...specialistToUpdate.rank,
         action.payload.score,
       ];
     },
@@ -50,6 +52,9 @@ export const specialistsSlice = createSlice({
     },
     setOffset(state, action) {
       state.offset = action.payload;
+    },
+    setSearch(state, action) {
+      state.search = action.payload;
     },
     setFilteredSpecialists(state) {
       const sliced = state.specialists.slice(state.offset, state.offset + 20);
@@ -70,6 +75,7 @@ const {
   setPageType,
   setOffset,
   setFilteredSpecialists,
+  setSearch,
 } = specialistsSlice.actions;
 export {
   likeSpecialist,
@@ -77,5 +83,6 @@ export {
   setPageType,
   setOffset,
   setFilteredSpecialists,
+  setSearch,
 };
 export default specialistsSlice;

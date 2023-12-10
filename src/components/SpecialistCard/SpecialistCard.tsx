@@ -14,6 +14,7 @@ type Props = {
 const Container = styled.div`
   background-color: white;
   min-width: 323px;
+  max-height: 410px;
   border-radius: 4px;
 `;
 

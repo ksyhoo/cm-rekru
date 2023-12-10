@@ -19,11 +19,14 @@ const ListContainer = styled.div`
 
 const InfiniteScroll = () => {
   const dispatch = useAppDispatch();
-  const { loadedSpecialists, offset, pageType } = useAppSelector((state) => ({
-    loadedSpecialists: state.specialists.loadedSpecialists,
-    offset: state.specialists.offset,
-    pageType: state.specialists.pageType,
-  }));
+  const { loadedSpecialists, offset, pageType, searchTerm } = useAppSelector(
+    (state) => ({
+      loadedSpecialists: state.specialists.loadedSpecialists,
+      offset: state.specialists.offset,
+      pageType: state.specialists.pageType,
+      searchTerm: state.specialists.search,
+    }),
+  );
 
   const loaderRef = useRef(null);
 
@@ -58,7 +61,8 @@ const InfiniteScroll = () => {
   }, []);
 
   const filters = {
-    liked: pageType === 'favorite' ? true : undefined,
+    isLikedPage: pageType === 'favorite',
+    searchTerm,
   };
 
   const specialists = filterData(loadedSpecialists, filters);

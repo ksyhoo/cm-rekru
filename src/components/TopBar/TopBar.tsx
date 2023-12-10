@@ -1,6 +1,6 @@
-import { setPageType } from '@src/pages/specialistsSlice';
+import React, { useCallback } from 'react';
+import { setPageType, setSearch } from '@src/pages/specialistsSlice';
 import { useAppDispatch, useAppSelector } from '@src/store/hooks';
-import React from 'react';
 import styled from 'styled-components';
 
 export type SpecialistPageType = 'all' | 'favorite';
@@ -8,6 +8,13 @@ export type SpecialistPageType = 'all' | 'favorite';
 const Container = styled.div`
   display: flex;
   justify-content: space-around;
+  padding: 2rem 0;
+  gap: 15px;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: 1200px) {
+    flex-direction: row;
+  }
 `;
 
 const SpecialistCountHeder = styled.h4`
@@ -21,17 +28,35 @@ const StyledButton = styled.button<{ $isActive: boolean }>`
   height: 50px;
   padding: 0 3rem;
   font-size: 0.6rem;
-  background-color: ${(props) => (props.$isActive ? '#3540ff' : '#e2e4ec')};
-  color: ${(props) => (props.$isActive ? 'white' : '#aeaeae')};
   text-align: center;
   transition: background-color 0.3s;
+  outline: ${(props) => (props.$isActive ? '0px' : '1px solid #e2e4ec')};
+  background-color: ${(props) => (props.$isActive ? '#3540ff' : 'transparent')};
+  color: ${(props) => (props.$isActive ? 'white' : '#aeaeae')};
   &:hover {
-    background-color: ${(props) => (props.$isActive ? '#7d84ff' : '#fbfbfb')};
+    background-color: ${(props) => (props.$isActive ? '#7d84ff' : '#e2e4ec')};
+    color: ${(props) => (props.$isActive ? 'white' : '#3540ff')};
   }
 `;
+
 const Buttons = styled.div`
   display: flex;
+  border-radius: 4px;
 `;
+
+const Search = styled.div`
+  & :focus,
+  :hover {
+    background: white;
+  }
+`;
+
+const Input = styled.input`
+  all: unset;
+`;
+
+const mySpecialistLabel = 'My specialists';
+const allSpecialistLabel = 'All specialists';
 
 const TopBar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -40,20 +65,27 @@ const TopBar: React.FC = () => {
     loadedSpecialists: state.specialists.loadedSpecialists,
   }));
   const isFavoritePage = pageType === 'favorite';
-  const getSpecialistCount = () =>
-    isFavoritePage
-      ? loadedSpecialists.filter((specialist) => specialist.liked).length
-      : loadedSpecialists.length;
+  const getSpecialistCount = useCallback(
+    () =>
+      isFavoritePage
+        ? loadedSpecialists.filter((specialist) => specialist.liked).length
+        : loadedSpecialists.length,
+    [isFavoritePage, loadedSpecialists],
+  );
 
   const specialistCount = getSpecialistCount();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
     dispatch(setPageType(e?.currentTarget?.value));
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearch(e.target.value));
+  };
+
   return (
     <Container>
       <SpecialistCountHeder>
-        {isFavoritePage ? 'My specialist' : 'All Specialists'} (
+        {isFavoritePage ? mySpecialistLabel : allSpecialistLabel} (
         {specialistCount})
       </SpecialistCountHeder>
 
@@ -63,19 +95,19 @@ const TopBar: React.FC = () => {
           $isActive={!isFavoritePage}
           onClick={handleClick}
         >
-          All specialists
+          {allSpecialistLabel}
         </StyledButton>
         <StyledButton
           value='favorite'
           $isActive={isFavoritePage}
           onClick={handleClick}
         >
-          My specialists
+          {mySpecialistLabel}
         </StyledButton>
       </Buttons>
-      <div>
-        search <input type='text' />
-      </div>
+      <Search>
+        <Input type='text ' placeholder='Search...' onChange={handleSearch} />
+      </Search>
     </Container>
   );
 };
