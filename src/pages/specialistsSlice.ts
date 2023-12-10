@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { specialists as originalData } from '@src/store/data';
+import { specialists } from '@src/store/data';
 
 export type PageType = 'all' | 'favorite';
 
@@ -14,14 +14,14 @@ export type Specialist = {
 
 type SpecialistsState = {
   specialists: Specialist[];
-  filteredSpecialists: Specialist[];
+  loadedSpecialists: Specialist[];
   offset: number;
   pageType: PageType;
 };
 
 const initialState: SpecialistsState = {
-  specialists: originalData,
-  filteredSpecialists: [],
+  specialists,
+  loadedSpecialists: [],
   offset: 0,
   pageType: 'all',
 };
@@ -31,17 +31,17 @@ export const specialistsSlice = createSlice({
   initialState,
   reducers: {
     likeSpecialist(state, action) {
-      const originalSpecialist = state.filteredSpecialists.find(
+      const specialistToUpdate = state.loadedSpecialists.find(
         (specialist) => specialist.id === action.payload,
       );
-      originalSpecialist.liked = !originalSpecialist.liked;
+      specialistToUpdate.liked = !specialistToUpdate.liked;
     },
     voteSpecialist(state, action) {
-      const originalSpecialist = state.filteredSpecialists.find(
+      const loadedSpecialists = state.loadedSpecialists.find(
         (specialist) => specialist.id === action.payload,
       );
-      originalSpecialist.rank = [
-        ...originalSpecialist.rank,
+      loadedSpecialists.rank = [
+        ...loadedSpecialists.rank,
         action.payload.score,
       ];
     },
@@ -53,7 +53,7 @@ export const specialistsSlice = createSlice({
     },
     setFilteredSpecialists(state) {
       const sliced = state.specialists.slice(state.offset, state.offset + 20);
-      state.filteredSpecialists = [...state.filteredSpecialists, ...sliced];
+      state.loadedSpecialists = [...state.loadedSpecialists, ...sliced];
       state.offset += 20;
     },
   },

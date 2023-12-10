@@ -19,8 +19,8 @@ const ListContainer = styled.div`
 
 const InfiniteScroll = () => {
   const dispatch = useAppDispatch();
-  const { filteredSpecialists, offset, pageType } = useAppSelector((state) => ({
-    filteredSpecialists: state.specialists.filteredSpecialists,
+  const { loadedSpecialists, offset, pageType } = useAppSelector((state) => ({
+    loadedSpecialists: state.specialists.loadedSpecialists,
     offset: state.specialists.offset,
     pageType: state.specialists.pageType,
   }));
@@ -61,7 +61,7 @@ const InfiniteScroll = () => {
     liked: pageType === 'favorite' ? true : undefined,
   };
 
-  const specialists = filterData(filteredSpecialists, filters);
+  const specialists = filterData(loadedSpecialists, filters);
 
   if (!specialists) return null;
 

@@ -33,19 +33,28 @@ const Buttons = styled.div`
   display: flex;
 `;
 
-const TopBar = () => {
+const TopBar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const pageType = useAppSelector((state) => state.specialists.pageType);
+  const { loadedSpecialists, pageType } = useAppSelector((state) => ({
+    pageType: state.specialists.pageType,
+    loadedSpecialists: state.specialists.loadedSpecialists,
+  }));
   const isFavoritePage = pageType === 'favorite';
+  const getSpecialistCount = () =>
+    isFavoritePage
+      ? loadedSpecialists.filter((specialist) => specialist.liked).length
+      : loadedSpecialists.length;
 
-  const handleClick = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => dispatch(setPageType(e?.currentTarget?.value));
+  const specialistCount = getSpecialistCount();
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+    dispatch(setPageType(e?.currentTarget?.value));
 
   return (
     <Container>
       <SpecialistCountHeder>
-        {isFavoritePage ? 'My specialist' : 'All Specialists'} (10)
+        {isFavoritePage ? 'My specialist' : 'All Specialists'} (
+        {specialistCount})
       </SpecialistCountHeder>
 
       <Buttons>
