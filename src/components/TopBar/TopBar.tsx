@@ -1,8 +1,4 @@
-import {
-  PageType,
-  //   fetchSpecialists,
-  setPageType,
-} from '@src/pages/specialistsSlice';
+import { setPageType } from '@src/pages/specialistsSlice';
 import { useAppDispatch, useAppSelector } from '@src/store/hooks';
 import React from 'react';
 import styled from 'styled-components';
@@ -13,6 +9,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
 `;
+
 const SpecialistCountHeder = styled.h4`
   font-weight: 600;
   font-size: 30px;

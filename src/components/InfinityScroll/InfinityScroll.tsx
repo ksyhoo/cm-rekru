@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import SpecialistCard from '../SpecialistCard';
 import { useAppDispatch, useAppSelector } from '@src/store/hooks';
 import styled from 'styled-components';
-import { setFilteredSpecialists, setOffset } from '@src/pages/specialistsSlice';
+import { setFilteredSpecialists } from '@src/pages/specialistsSlice';
 import { filterData } from '@src/pages/helpers';
 
 const Loader = styled.div`

@@ -9,10 +9,11 @@ import styled from 'styled-components';
 import { likeSpecialist } from '@src/pages/specialistsSlice';
 import { useAppDispatch } from '@src/store/hooks';
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ $liked?: boolean }>`
   display: flex;
   align-items: start;
   cursor: pointer;
+  filter: ${(props) => `grayScale(${props.$liked ? 0 : 100})`};
 `;
 
 const Container = styled.div`
@@ -26,7 +27,6 @@ const TopControls: React.FC<{ id: number; liked: boolean }> = ({
   id,
   liked,
 }) => {
-  //TODO: hence no asset for not liked specialist ony add tooltip for liked specialists
   const dispatch = useAppDispatch();
   const handleLike = () => dispatch(likeSpecialist(id));
   return (
@@ -38,7 +38,7 @@ const TopControls: React.FC<{ id: number; liked: boolean }> = ({
           alt='click more'
         />
       </StyledButton>
-      <StyledButton type='button' onClick={handleLike}>
+      <StyledButton type='button' onClick={handleLike} $liked={liked}>
         <img
           srcSet={`${heart1x} 1x, ${heart2x} 2x, ${heart3x} 3x`}
           src={heart1x}
